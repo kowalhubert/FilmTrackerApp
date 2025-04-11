@@ -38,16 +38,18 @@ const EditFilmForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const formattedReleaseDate = film.releaseDate.split('-').reverse().join('-');
-
-        const updatedFilm = { ...film, releaseDate: formattedReleaseDate };
-
+        const formattedFilm = {
+            ...film,
+            releaseDate: film.releaseDate,
+        };
         try {
-            await axios.put(`http://localhost:8080/films/${id}`, updatedFilm);
+            const response = await axios.put(`http://localhost:8080/films/${id}`, formattedFilm);
             navigate('/');
         } catch (error) {
-            console.error('Błąd podczas zapisywania zmian', error);
+            console.error('Błąd podczas zapisywania zmian:', error.response || error.message);
+            if (error.response) {
+                console.error('Błąd odpowiedzi z serwera:', error.response.data);
+            }
         }
     };
 
@@ -89,11 +91,10 @@ const EditFilmForm = () => {
                 </label>
                 <label>
                     Data wydania:
-                    {/* Konwertowanie daty na 'yyyy-MM-dd' przed ustawieniem jej w polu date */}
                     <input
                         type="date"
                         name="releaseDate"
-                        value={film.releaseDate ? film.releaseDate.split('-').reverse().join('-') : ''}
+                        value={film.releaseDate || ''}
                         onChange={handleInputChange}
                         required
                     />
