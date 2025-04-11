@@ -45,7 +45,7 @@ Aplikacja umożliwia użytkownikom zarządzanie bazą obejrzanych filmów. Pozwa
 1. **Zainstaluj zależności**: Przejdź do folderu projektu frontendowego i zainstaluj wszystkie zależności:
 
     ```bash
-    cd film-database-frontend
+    cd film-tracker-frontend
     npm install
     ```
 
